@@ -1,5 +1,5 @@
 <template>
-  <b-navbar type="dark" variant="dark">
+  <b-navbar type="dark" variant="dark" class="mb-5">
     <b-navbar-nav>
       <template v-if="authenticated">
         <b-navbar-brand>Hello {{user.name}}!</b-navbar-brand>

@@ -1,10 +1,14 @@
 <template>
-  <b-container>All the files go here!</b-container>
+  <b-container>
+    <Files />
+  </b-container>
 </template>
 
 <script>
+import Files from "@/components/Files";
+
 export default {
   name: "Dashboard",
-  components: {}
+  components: { Files }
 };
 </script>
