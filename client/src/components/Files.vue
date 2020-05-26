@@ -2,14 +2,24 @@
   <b-container>
     <h2 class="mb-5">Files</h2>
     <b-table
-      striped
-      hover
       :total-rows="pagination.rows"
       :per-page="pagination.perPage"
       :items="files"
+      :fields="fields"
+      select-mode="single"
       id="files"
       class="mb-5"
-    ></b-table>
+      selectable
+      bordered
+      hover
+      @row-selected="onRowSelected"
+    >
+      <template v-slot:cell(action)="{ rowSelected }">
+        <template v-if="rowSelected">
+          <b-button @click="deleteFile(selected)" variant="danger">Delete</b-button>
+        </template>
+      </template>
+    </b-table>
     <b-pagination
       v-model="pagination.currentPage"
       :total-rows="pagination.rows"
@@ -29,6 +39,7 @@ export default {
   data() {
     return {
       files: [],
+      fields: ["name", "size", "type", "action"],
       file: {
         id: "",
         name: "",
@@ -37,7 +48,8 @@ export default {
       },
       file_id: "",
       pagination: {},
-      edit: false
+      edit: false,
+      selected: {}
     };
   },
   created() {
@@ -62,6 +74,15 @@ export default {
         prevPage: links.prev
       };
       this.pagination = pagination;
+    },
+    onRowSelected(item) {
+      this.selected = { ...item[0] };
+    },
+    async deleteFile(file) {
+      const fileId = file.id;
+      let response = await axios.delete(`file/${fileId}`);
+      this.fetchFiles(1);
+      console.log(response);
     }
   }
 };
