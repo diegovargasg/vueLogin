@@ -23,3 +23,10 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
     Route::post('signout', 'SignOutController');
     Route::get('me', 'MeController');
 });
+
+
+Route::get('files', 'FileController@index');
+Route::get('file/{id}', 'FileController@show');
+Route::post('file', 'FileController@store');
+Route::put('file/{id}', 'FileController@update');
+Route::delete('file/{id}', 'FileController@destroy');
