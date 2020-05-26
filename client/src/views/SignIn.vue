@@ -1,5 +1,8 @@
 <template>
   <b-container>
+    <template v-if="showAlert">
+      <b-alert show variant="danger">Invalid username or password</b-alert>
+    </template>
     <b-form @submit.prevent="submit">
       <b-form-group id="input-group-1" label="Email:" label-for="email">
         <b-form-input id="email" name="email" type="email" v-model="form.email" required></b-form-input>
@@ -29,7 +32,8 @@ export default {
       form: {
         email: "",
         password: ""
-      }
+      },
+      showAlert: false
     };
   },
   methods: {
@@ -43,8 +47,8 @@ export default {
             name: "Dashboard"
           });
         })
-        .catch(e => {
-          console.log("failed login", e);
+        .catch(() => {
+          this.showAlert = true;
         });
     }
   }
