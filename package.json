@@ -1,0 +1,20 @@
+{
+  "name": "vuetask",
+  "version": "1.0.0",
+  "description": "vue and laravel file manager",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd server && composer install",
+    "heroku-postbuild": "cd client && npm install --only=dev &&  npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diegovargasg/vueLogin.git"
+  },
+  "author": "Diego Vargas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diegovargasg/vueLogin/issues"
+  },
+  "homepage": "https://github.com/diegovargasg/vueLogin#readme"
+}
