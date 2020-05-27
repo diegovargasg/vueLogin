@@ -4,7 +4,7 @@
   "description": "vue and laravel file manager",
   "main": "index.js",
   "scripts": {
-    "start": "cd server && composer install",
+    "build": "cd server && composer install",
     "heroku-postbuild": ""
   },
   "repository": {
