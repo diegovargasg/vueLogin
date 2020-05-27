@@ -10,6 +10,7 @@ Vue.use(BootstrapVue);
 
 require("@/store/subscriber");
 
+//TODO: change this vhost
 axios.defaults.baseURL = "http://vuetask.com/api";
 
 Vue.config.productionTip = false;

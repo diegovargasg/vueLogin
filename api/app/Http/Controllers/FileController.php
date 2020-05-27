@@ -6,9 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\File;
 use App\Http\Resources\File as FileResource;
+use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
+    public function __construct() {
+        $this->middleware(['auth:api']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -38,6 +42,19 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'archive' => 'required|file',
+        ]);
+
+        //TODO: test this
+        if (!$request->hasFile('archive')) {
+            return false;
+        }
+
+        $path = $request->archive->store('files');
+        
+        /***Store the file info in the database */
         $file = new File;
 
         $file->id = $request->input('file_id');
@@ -45,6 +62,7 @@ class FileController extends Controller
         $file->type = $request->input('type');
         $file->size = $request->input('size');
         $file->user_id = $request->input('user_id');
+        $file->generated_name = $path;
 
         if($file->save()) {
             return new FileResource($file);
@@ -61,7 +79,7 @@ class FileController extends Controller
     {
         $file = File::findOrFail($id);
 
-        return new FileResource($file);
+        return Storage::download($file->generated_name);
     }
 
     /**

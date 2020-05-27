@@ -3,11 +3,13 @@
     <h3 class="mb-2 mt-5">Add a new file</h3>
     <b-form-group>
       <b-form-file
-        id="file-default"
+        id="upload-file"
         accept=".jpg, .png, .gif, txt"
         placeholder="Choose a file or drop it here..."
         drop-placeholder="Drop file here..."
+        @change="selectFile"
       ></b-form-file>
+      <b-button @click="uploadFile()" variant="secondary" size="sm">Upload</b-button>
     </b-form-group>
 
     <h3 class="mb-2 mt-5">Files</h3>
@@ -27,17 +29,17 @@
       <template v-slot:cell(action)="{ rowSelected }">
         <template v-if="rowSelected">
           <b-button v-b-modal.edit-modal variant="primary" size="sm">Edit</b-button>
+          <b-button @click="downloadFile(selectedFile)" variant="success" size="sm">Download</b-button>
           <b-button @click="deleteFile(selectedFile)" variant="danger" size="sm">Delete</b-button>
         </template>
       </template>
       <template v-slot:table-caption>Select a file for more options</template>
     </b-table>
-
     <b-modal
       id="edit-modal"
       ref="modal"
       title="Rename"
-      @show="resetModal"
+      @show="showModal"
       @hidden="resetModal"
       @ok="handleOk"
     >
@@ -47,7 +49,12 @@
           label-for="name-input"
           invalid-feedback="Name is required"
         >
-          <b-form-input id="name-input" v-model="selectedFile.name" :state="editNameState" required></b-form-input>
+          <b-form-input
+            id="name-input"
+            v-model="editSelectedFileName"
+            :state="editNameState"
+            required
+          ></b-form-input>
         </b-form-group>
       </form>
     </b-modal>
@@ -79,9 +86,11 @@ export default {
         size: ""
       },
       file_id: "",
+      fileToUpload: null,
       pagination: {},
       selectedFile: {},
-      editNameState: null
+      editNameState: null,
+      editSelectedFileName: ""
     };
   },
   created() {
@@ -125,11 +134,16 @@ export default {
     async editFile() {
       try {
         const fileId = this.selectedFile.id;
-        const fileName = this.selectedFile.name;
+        const fileNewName = this.editSelectedFileName;
+        const filePrevName = this.selectedFile.name;
+
+        if (fileNewName === filePrevName) {
+          return false;
+        }
 
         let response = await axios.put(`file/${fileId}`, {
           file_id: fileId,
-          name: fileName
+          name: fileNewName
         });
 
         return response;
@@ -143,8 +157,13 @@ export default {
       this.editNameState = valid;
       return valid;
     },
+    showModal() {
+      this.editNameState = null;
+      this.editSelectedFileName = this.selectedFile.name;
+    },
     resetModal() {
       this.editNameState = null;
+      this.editSelectedFileName = "";
     },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
@@ -168,6 +187,29 @@ export default {
       this.$nextTick(() => {
         this.$bvModal.hide("edit-modal");
       });
+    },
+    selectFile() {
+      this.fileToUpload = event.target.files[0];
+
+      //add validation here for size and so on
+    },
+    uploadFile() {
+      const data = new FormData();
+      data.append("name", this.fileToUpload.name);
+      data.append("type", this.fileToUpload.type);
+      data.append("size", this.fileToUpload.size);
+      data.append("archive", this.fileToUpload);
+      data.append("user_id", 1);
+
+      try {
+        axios.post("/file", data);
+      } catch (error) {
+        alert(error);
+      }
+    },
+    downloadFile() {
+      const fileId = this.selectedFile.id;
+      window.open(`${axios.defaults.baseURL}/file/${fileId}`, "_blank");
     }
   }
 };
