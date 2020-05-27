@@ -88,8 +88,6 @@ class FileController extends Controller
 
         $file->id = $request->input('file_id');
         $file->name = $request->input('name');
-        $file->type = $request->input('type');
-        $file->size = $request->input('size');
 
         if($file->save()) {
             return new FileResource($file);
@@ -105,7 +103,6 @@ class FileController extends Controller
     public function destroy($id)
     {
         $file = File::findOrFail($id);
-
         if($file->delete()) {
             return new FileResource($file);
         }
