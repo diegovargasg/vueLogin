@@ -11,7 +11,7 @@ Vue.use(BootstrapVue);
 require("@/store/subscriber");
 
 //TODO: change this vhost
-axios.defaults.baseURL = "http://vuetask.com/api";
+axios.defaults.baseURL = "http://localhost:8000/api";
 
 Vue.config.productionTip = false;
 
