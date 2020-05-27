@@ -10,8 +10,7 @@ Vue.use(BootstrapVue);
 
 require("@/store/subscriber");
 
-//TODO: change this vhost
-axios.defaults.baseURL = "http://localhost:8000/api";
+axios.defaults.baseURL = "https://agile-taiga-10845.herokuapp.com/api";
 
 Vue.config.productionTip = false;
 
