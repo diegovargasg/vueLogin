@@ -17,9 +17,10 @@ class CreateFilesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('type');
-            $table->integer('size');
-            //Foreign key from table users
+            $table->string('size');
+            $table->string('generated_name');
             $table->integer('user_id');
+            //TODO: check why is not working, Foreign key from table users
             //$table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

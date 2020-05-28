@@ -11,6 +11,6 @@ class FilesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\File::class, 50)->create();
+        factory(App\File::class, 15)->create();
     }
 }
