@@ -4,11 +4,17 @@
     <b-form-group>
       <b-form-file
         id="upload-file"
+        class="mb-2"
         accept=".jpg, .png, .gif, txt"
         placeholder="Choose a file or drop it here..."
         drop-placeholder="Drop file here..."
+        :state="fileToUploadState"
         @change="selectFile"
       ></b-form-file>
+      <b-form-invalid-feedback
+        id="upload-file"
+        class="mb-2"
+      >The file must be maximum 8mb and format PDF, JPG or PNG</b-form-invalid-feedback>
       <b-button @click="uploadFile()" variant="secondary" size="sm">Upload</b-button>
     </b-form-group>
 
@@ -28,8 +34,13 @@
     >
       <template v-slot:cell(action)="{ rowSelected }">
         <template v-if="rowSelected">
-          <b-button v-b-modal.edit-modal variant="primary" size="sm">Edit</b-button>
-          <b-button @click="downloadFile(selectedFile)" variant="success" size="sm">Download</b-button>
+          <b-button v-b-modal.edit-modal variant="primary" size="sm" class="mr-2">Edit</b-button>
+          <b-button
+            @click="downloadFile(selectedFile)"
+            variant="success"
+            size="sm"
+            class="mr-2"
+          >Download</b-button>
           <b-button @click="deleteFile(selectedFile)" variant="danger" size="sm">Delete</b-button>
         </template>
       </template>
@@ -74,7 +85,14 @@
 
 <script>
 import axios from "axios";
+import { mapGetters } from "vuex";
+
 export default {
+  computed: {
+    ...mapGetters({
+      user: "auth/user"
+    })
+  },
   data() {
     return {
       files: [],
@@ -87,6 +105,7 @@ export default {
       },
       file_id: "",
       fileToUpload: null,
+      fileToUploadState: null,
       pagination: {},
       selectedFile: {},
       editNameState: null,
@@ -125,8 +144,10 @@ export default {
     async deleteFile(file) {
       const fileId = file.id;
       try {
-        await axios.delete(`file/${fileId}`);
-        this.fetchFiles(1);
+        const response = await axios.delete(`file/${fileId}`);
+        if (response) {
+          this.fetchFiles(1);
+        }
       } catch (error) {
         alert(`the file could not be deleted: ${error}`);
       }
@@ -191,15 +212,19 @@ export default {
     selectFile() {
       this.fileToUpload = event.target.files[0];
 
-      //add validation here for size and so on
+      //TODO: add validation here for size and so on
     },
     uploadFile() {
+      if (this.fileToUpload === null) {
+        this.fileToUploadState = false;
+        return;
+      }
       const data = new FormData();
       data.append("name", this.fileToUpload.name);
       data.append("type", this.fileToUpload.type);
       data.append("size", this.fileToUpload.size);
       data.append("archive", this.fileToUpload);
-      data.append("user_id", 1);
+      data.append("user_id", this.user.id);
 
       try {
         axios.post("/file", data);

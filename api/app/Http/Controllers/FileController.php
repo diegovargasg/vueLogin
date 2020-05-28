@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
-    public function __construct() {
-        $this->middleware(['auth:api']);
+    public function __construct()
+    {
+        //Commented due to the files CDN wont detect the localStorage authentication due to different domain
+        //$this->middleware(['auth:api']);
     }
     /**
      * Display a listing of the resource.
@@ -42,7 +44,6 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'archive' => 'required|file',
         ]);
@@ -64,7 +65,7 @@ class FileController extends Controller
         $file->user_id = $request->input('user_id');
         $file->generated_name = $path;
 
-        if($file->save()) {
+        if ($file->save()) {
             return new FileResource($file);
         }
     }
@@ -107,7 +108,7 @@ class FileController extends Controller
         $file->id = $request->input('file_id');
         $file->name = $request->input('name');
 
-        if($file->save()) {
+        if ($file->save()) {
             return new FileResource($file);
         }
     }
@@ -121,7 +122,7 @@ class FileController extends Controller
     public function destroy($id)
     {
         $file = File::findOrFail($id);
-        if($file->delete()) {
+        if ($file->delete()) {
             return new FileResource($file);
         }
     }
