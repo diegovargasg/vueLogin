@@ -25,7 +25,7 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
 });
 
 
-Route::get('files', 'FileController@index');
+Route::get('files/{userid}', 'FileController@index');
 Route::get('file/{id}', 'FileController@show');
 Route::post('file', 'FileController@store');
 Route::put('file/{id}', 'FileController@update');

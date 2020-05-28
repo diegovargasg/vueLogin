@@ -20,9 +20,9 @@ class FileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($userid)
     {
-        $files = File::orderBy('created_at', 'desc')->paginate(5);
+        $files = File::where('user_id', $userid)->orderBy('created_at', 'desc')->paginate(5);
         return FileResource::collection($files);
     }
 

@@ -24,6 +24,6 @@ $factory->define(App\File::class, function (Faker $faker) {
         'type' => $faker->fileExtension,
         'size' => $bytes,
         'generated_name' => $file,
-        'user_id' => 1
+        'user_id' => $faker->numberBetween(1, 2)
     ];
 });

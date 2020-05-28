@@ -1,11 +1,11 @@
 <template>
   <b-navbar type="dark" variant="dark" class="mb-5">
-    <b-navbar-nav>
-      <template v-if="authenticated">
-        <b-navbar-brand>Hello {{user.name}}!</b-navbar-brand>
+    <template v-if="authenticated">
+      <b-navbar-brand class="col-6">Hello {{user.name}}!</b-navbar-brand>
+      <b-navbar-nav class="col-6 justify-content-end">
         <b-nav-item @click.prevent="signOut" right>Sign out</b-nav-item>
-      </template>
-    </b-navbar-nav>
+      </b-navbar-nav>
+    </template>
   </b-navbar>
 </template>
 

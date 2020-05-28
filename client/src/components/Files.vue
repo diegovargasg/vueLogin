@@ -30,14 +30,22 @@
       :per-page="pagination.perPage"
       :items="files"
       :fields="fields"
+      :busy="isTableBusy"
       select-mode="single"
       id="files"
-      class="mb-5"
+      class="mb-2"
       selectable
       bordered
       hover
       @row-selected="onRowSelected"
     >
+      <template v-slot:table-busy>
+        <div class="text-center text-dark my-2">
+          <b-spinner class="align-middle mr-2"></b-spinner>
+          <strong>Loading...</strong>
+        </div>
+      </template>
+
       <template v-slot:cell(action)="{ rowSelected }">
         <template v-if="rowSelected">
           <b-button v-b-modal.edit-modal variant="primary" size="sm" class="mr-2">Edit</b-button>
@@ -52,10 +60,12 @@
       </template>
       <template v-slot:table-caption>Select a file for more options</template>
     </b-table>
+
     <b-modal
       id="edit-modal"
       ref="modal"
       title="Rename"
+      size="sm"
       @show="showModal"
       @hidden="resetModal"
       @ok="handleOk"
@@ -81,6 +91,7 @@
       :total-rows="pagination.rows"
       :per-page="pagination.perPage"
       aria-controls="files"
+      class="mb-5"
       size="sm"
       align="center"
       @input="fetchFiles"
@@ -110,7 +121,8 @@ export default {
       pagination: {},
       selectedFile: {},
       editNameState: null,
-      editSelectedFileName: ""
+      editSelectedFileName: "",
+      isTableBusy: false
     };
   },
   created() {
@@ -119,10 +131,12 @@ export default {
   methods: {
     async fetchFiles(pageNum = 1) {
       try {
-        const pageUrl = `files?page=${pageNum}`;
+        this.isTableBusy = true;
+        const pageUrl = `files/${this.user.id}?page=${pageNum}`;
         let response = await axios.get(pageUrl);
         this.files = response.data.data;
         this.makePagination(response.data.meta, response.data.links);
+        this.isTableBusy = false;
       } catch (error) {
         alert(`Files could not be retrieved: ${error}`);
       }
