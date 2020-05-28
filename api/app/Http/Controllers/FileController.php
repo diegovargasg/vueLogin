@@ -45,13 +45,12 @@ class FileController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'archive' => 'required|file',
+            'name' => 'required',
+            'type' => 'required',
+            'size' => 'required',
+            'archive' => 'required',
+            'user_id' => 'required'
         ]);
-
-        //TODO: test this
-        if (!$request->hasFile('archive')) {
-            return false;
-        }
 
         $path = $request->archive->store('files');
         
@@ -61,7 +60,7 @@ class FileController extends Controller
         $file->id = $request->input('file_id');
         $file->name = $request->input('name');
         $file->type = $request->input('type');
-        $file->size = $request->input('size');
+        $file->size = $this->formatSizeUnits($request->file('archive')->getSize());
         $file->user_id = $request->input('user_id');
         $file->generated_name = $path;
 
@@ -125,5 +124,18 @@ class FileController extends Controller
         if ($file->delete()) {
             return new FileResource($file);
         }
+    }
+
+    private function formatSizeUnits($bytes)
+    {
+        if ($bytes >= 1048576) {
+            $bytes = number_format($bytes / 1048576, 2) . ' MB';
+        } elseif ($bytes >= 1024) {
+            $bytes = number_format($bytes / 1024, 2) . ' KB';
+        } else {
+            $bytes = $bytes . ' bytes';
+        }
+
+        return $bytes;
     }
 }

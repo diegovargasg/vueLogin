@@ -9,13 +9,19 @@
         placeholder="Choose a file or drop it here..."
         drop-placeholder="Drop file here..."
         :state="fileToUploadState"
+        v-model="fileToUpload"
         @change="selectFile"
       ></b-form-file>
       <b-form-invalid-feedback
         id="upload-file"
         class="mb-2"
       >The file must be maximum 8mb and format PDF, JPG or PNG</b-form-invalid-feedback>
-      <b-button @click="uploadFile()" variant="secondary" size="sm">Upload</b-button>
+      <b-button @click="uploadFile()" variant="secondary" size="sm" :disabled="isUploading">
+        <template v-if="isUploading">
+          <b-spinner small></b-spinner>Loading...
+        </template>
+        <template v-else>Upload</template>
+      </b-button>
     </b-form-group>
 
     <h3 class="mb-2 mt-5">Files</h3>
@@ -97,13 +103,8 @@ export default {
     return {
       files: [],
       fields: ["name", "size", "type", { key: "action", class: "text-center" }],
-      file: {
-        id: "",
-        name: "",
-        type: "",
-        size: ""
-      },
       file_id: "",
+      isUploading: false,
       fileToUpload: null,
       fileToUploadState: null,
       pagination: {},
@@ -186,6 +187,9 @@ export default {
       this.editNameState = null;
       this.editSelectedFileName = "";
     },
+    restartPagination() {
+      this.fetchFiles(1);
+    },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
@@ -201,7 +205,7 @@ export default {
       // sends the put request to API
       const response = await this.editFile();
       if (response) {
-        this.fetchFiles(1);
+        this.restartPagination();
       }
 
       // Hide the modal manually
@@ -211,12 +215,19 @@ export default {
     },
     selectFile() {
       this.fileToUpload = event.target.files[0];
+      this.fileToUploadState = null;
 
-      //TODO: add validation here for size and so on
+      // is the file is more than 8mb
+      if (this.fileToUpload.size > 8000000) {
+        this.fileToUploadState = false;
+        this.fileToUpload = null;
+      }
     },
-    uploadFile() {
+    async uploadFile() {
+      this.isUploading = true;
       if (this.fileToUpload === null) {
         this.fileToUploadState = false;
+        this.isUploading = false;
         return;
       }
       const data = new FormData();
@@ -227,8 +238,15 @@ export default {
       data.append("user_id", this.user.id);
 
       try {
-        axios.post("/file", data);
+        const response = await axios.post("/file", data);
+
+        if (response) {
+          this.fileToUpload = null;
+          this.restartPagination();
+          this.isUploading = false;
+        }
       } catch (error) {
+        this.isUploading = false;
         alert(error);
       }
     },
