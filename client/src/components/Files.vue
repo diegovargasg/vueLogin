@@ -262,9 +262,16 @@ export default {
         alert(error);
       }
     },
-    downloadFile() {
+    async downloadFile() {
       const fileId = this.selectedFile.id;
-      window.open(`${axios.defaults.baseURL}/file/${fileId}`, "_blank");
+      try {
+        const response = await axios.get(`/file/${fileId}`);
+        if (response) {
+          window.open(`${axios.defaults.baseURL}/file/${fileId}`, "_blank");
+        }
+      } catch (e) {
+        alert(e);
+      }
     }
   }
 };
