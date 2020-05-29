@@ -28,14 +28,15 @@ $ git clone https://github.com/diegovargasg/vueLogin.git
 $ cd vueLogin
 $ npm run install
 ```
-***Note:***
-- *In case the installation command fails, the dependencies can manually be installed by running npm install and composer install inside the folders client and api respectively*
 
+**_Note:_**
+
+- _In case the installation command fails, the dependencies can manually be installed by running npm install and composer install inside the folders client and api respectively_
 
 ### Update the database credentials in the .env file
 
-***Note:***
-*The database must be created first.*
+**_Note:_**
+_The database must be created first._
 
 ```sh
 DB_HOST=<YOUR_HOST>
@@ -72,15 +73,15 @@ http://localhost:8080/
 ```
 
 ### TODOS:
+
 - [ ] Add UnitTesting
 - [ ] Remove faker modification for generating images
-
 
 ### Links, resources and special mentions:
 
 - https://cli.vuejs.org/ - vue cli
 - https://github.com/tymondesigns/jwt-auth - JSON Web Token Authentication for Laravel & Lumen
 - https://github.com/fzaninotto/Faker - Faker is a PHP library that generates fake data for you
-- https://github.com/bruceheller/images-generator - Faker adaptation for generating images ( you saved my life :) )
+- https://github.com/bruceheller/images-generator - Faker adaptation for generating images ( you saved my life :smile: )
 - https://www.youtube.com/user/TechGuyWeb - Web development tutorials
 - https://www.youtube.com/user/phpacademy - Web development tutorials
