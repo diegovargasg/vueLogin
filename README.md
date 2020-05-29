@@ -28,6 +28,9 @@ $ git clone https://github.com/diegovargasg/vueLogin.git
 $ cd vueLogin
 $ npm run install
 ```
+***Note:***
+- *In case the installation command fails, the dependencies can manually be installed by running npm install and composer install inside the folders client and api respectively*
+
 
 ### Update the database credentials in the .env file
 
@@ -67,7 +70,12 @@ The client server should be running now, usually under:
 http://localhost:8080/
 ```
 
-### Links and resources used:
+### TODOS:
+- [ ] Add UnitTesting
+- [ ] Remove faker modification for generating images
+
+
+### Links, resources and special mentions:
 
 - https://cli.vuejs.org/ - vue cli
 - https://github.com/tymondesigns/jwt-auth - JSON Web Token Authentication for Laravel & Lumen
