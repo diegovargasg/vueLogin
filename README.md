@@ -34,7 +34,8 @@ $ npm run install
 
 ### Update the database credentials in the .env file
 
-Note: The database must be created first.
+***Note:***
+*The database must be created first.*
 
 ```sh
 DB_HOST=<YOUR_HOST>
@@ -80,5 +81,6 @@ http://localhost:8080/
 - https://cli.vuejs.org/ - vue cli
 - https://github.com/tymondesigns/jwt-auth - JSON Web Token Authentication for Laravel & Lumen
 - https://github.com/fzaninotto/Faker - Faker is a PHP library that generates fake data for you
+- https://github.com/bruceheller/images-generator - Faker adaptation for generating images ( you saved my life :) )
 - https://www.youtube.com/user/TechGuyWeb - Web development tutorials
 - https://www.youtube.com/user/phpacademy - Web development tutorials
