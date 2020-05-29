@@ -25,7 +25,7 @@ $factory->define(App\File::class, function (Faker $faker) {
 
     return [
         'name' => $faker->word,
-        'type' => $faker->fileExtension,
+        'type' => 'jpg',
         'size' => $bytes,
         'generated_name' => $image,
         'user_id' => $faker->numberBetween(1, 2)

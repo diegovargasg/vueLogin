@@ -49,13 +49,8 @@
       <template v-slot:cell(action)="{ rowSelected }">
         <template v-if="rowSelected">
           <b-button v-b-modal.edit-modal variant="primary" size="sm" class="mr-2">Edit</b-button>
-          <b-button
-            @click="downloadFile(selectedFile)"
-            variant="success"
-            size="sm"
-            class="mr-2"
-          >Download</b-button>
-          <b-button @click="deleteFile(selectedFile)" variant="danger" size="sm">Delete</b-button>
+          <b-button @click="downloadFile" variant="success" size="sm" class="mr-2">Download</b-button>
+          <b-button variant="danger" size="sm" @click="deleteFileConfirm">Delete</b-button>
         </template>
       </template>
       <template v-slot:table-caption>Select a file for more options</template>
@@ -63,9 +58,9 @@
 
     <b-modal
       id="edit-modal"
-      ref="modal"
       title="Rename"
       size="sm"
+      button-size="sm"
       @show="showModal"
       @hidden="resetModal"
       @ok="handleOk"
@@ -156,8 +151,8 @@ export default {
     onRowSelected(item) {
       this.selectedFile = { ...item[0] };
     },
-    async deleteFile(file) {
-      const fileId = file.id;
+    async deleteFile() {
+      const fileId = this.selectedFile.id;
       try {
         const response = await axios.delete(`file/${fileId}`);
         if (response) {
@@ -166,6 +161,25 @@ export default {
       } catch (error) {
         alert(`the file could not be deleted: ${error}`);
       }
+    },
+    deleteFileConfirm() {
+      this.$bvModal
+        .msgBoxConfirm("Do you want to delete the file?", {
+          title: "Delete file",
+          size: "sm",
+          buttonSize: "sm",
+          okVariant: "primary",
+          okTitle: "Yes",
+          cancelTitle: "Cancel",
+          cancelVariant: "secondary",
+          footerClass: "p-2",
+          hideHeaderClose: false
+        })
+        .then(value => {
+          if (value) {
+            this.deleteFile();
+          }
+        });
     },
     async editFile() {
       try {
