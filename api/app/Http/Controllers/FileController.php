@@ -46,8 +46,6 @@ class FileController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'type' => 'required',
-            'size' => 'required',
             'archive' => 'required',
             'user_id' => 'required'
         ]);
@@ -57,9 +55,13 @@ class FileController extends Controller
         /***Store the file info in the database */
         $file = new File;
 
+        //tweak for type JPEG instead of JPG
+        $fileType = $request->file('archive')->extension() == "jpeg" ? "jpg" : $request->file('archive')->extension();
+        $fileName = str_replace(".".$fileType, "", $request->input('name'));
+
         $file->id = $request->input('file_id');
-        $file->name = $request->input('name');
-        $file->type = $request->input('type');
+        $file->name = $fileName;
+        $file->type = $fileType;
         $file->size = $this->formatSizeUnits($request->file('archive')->getSize());
         $file->user_id = $request->input('user_id');
         $file->generated_name = $path;
@@ -79,7 +81,7 @@ class FileController extends Controller
     {
         $file = File::findOrFail($id);
 
-        return Storage::download($file->generated_name);
+        return Storage::download($file->generated_name, $file->name.".".$file->type);
     }
 
     /**

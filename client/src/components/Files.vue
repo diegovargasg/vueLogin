@@ -246,8 +246,6 @@ export default {
       }
       const data = new FormData();
       data.append("name", this.fileToUpload.name);
-      data.append("type", this.fileToUpload.type);
-      data.append("size", this.fileToUpload.size);
       data.append("archive", this.fileToUpload);
       data.append("user_id", this.user.id);
 
