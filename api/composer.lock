@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "264894209e49db95217c2f3df88f2d86",
+    "content-hash": "f46254bb99201e7964a9ddaeb2d783cb",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1327,16 +1327,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.34.2",
+            "version": "2.35.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "3e87404329b8072295ea11d548b47a1eefe5a162"
+                "reference": "4b9bd835261ef23d36397a46a76b496a458305e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/3e87404329b8072295ea11d548b47a1eefe5a162",
-                "reference": "3e87404329b8072295ea11d548b47a1eefe5a162",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/4b9bd835261ef23d36397a46a76b496a458305e5",
+                "reference": "4b9bd835261ef23d36397a46a76b496a458305e5",
                 "shasum": ""
             },
             "require": {
@@ -1396,7 +1396,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2020-05-19T22:14:16+00:00"
+            "time": "2020-05-24T18:27:52+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -3786,6 +3786,56 @@
     ],
     "packages-dev": [
         {
+            "name": "bheller/images-generator",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bruceheller/images-generator.git",
+                "reference": "50b61fe1dcf1b72b6a830debec4db22afd1e8ee1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bruceheller/images-generator/zipball/50b61fe1dcf1b72b6a830debec4db22afd1e8ee1",
+                "reference": "50b61fe1dcf1b72b6a830debec4db22afd1e8ee1",
+                "shasum": ""
+            },
+            "require": {
+                "fzaninotto/faker": "~1.4",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "bheller\\ImagesGenerator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bruce Heller",
+                    "email": "bheller@bheller.com",
+                    "homepage": "http://www.bheller.com"
+                }
+            ],
+            "description": "Generator of placeholder images for Faker",
+            "homepage": "https://github.com/bruceheller/images-generator",
+            "keywords": [
+                "data",
+                "faker",
+                "fixtures",
+                "images-generator",
+                "imagesgenerator"
+            ],
+            "time": "2016-03-03T08:40:48+00:00"
+        },
+        {
             "name": "doctrine/instantiator",
             "version": "1.3.0",
             "source": {
@@ -3897,16 +3947,16 @@
         },
         {
             "name": "facade/ignition",
-            "version": "2.0.4",
+            "version": "2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "749fba7bf560fe2600ea55bf8734a7c9b8c30cfd"
+                "reference": "38e1b180544bfefebe37e0f65980792ea78a534a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/749fba7bf560fe2600ea55bf8734a7c9b8c30cfd",
-                "reference": "749fba7bf560fe2600ea55bf8734a7c9b8c30cfd",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/38e1b180544bfefebe37e0f65980792ea78a534a",
+                "reference": "38e1b180544bfefebe37e0f65980792ea78a534a",
                 "shasum": ""
             },
             "require": {
@@ -3964,7 +4014,7 @@
                 "laravel",
                 "page"
             ],
-            "time": "2020-05-18T15:20:13+00:00"
+            "time": "2020-05-28T22:49:07+00:00"
         },
         {
             "name": "facade/ignition-contracts",
