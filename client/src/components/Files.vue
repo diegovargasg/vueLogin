@@ -23,9 +23,14 @@
         <template v-else>Upload</template>
       </b-button>
     </b-form-group>
-
     <h3 class="mb-2 mt-5">Files</h3>
+    <div
+      v-if="pagination.rows === 0"
+      class="alert alert-dark mb-2 mt-5 text-center"
+      role="alert"
+    >Nothing here, start uploading files!</div>
     <b-table
+      v-if="pagination.rows > 0"
       :total-rows="pagination.rows"
       :per-page="pagination.perPage"
       :items="files"
@@ -82,6 +87,7 @@
     </b-modal>
 
     <b-pagination
+      v-if="pagination.rows > 0"
       v-model="pagination.currentPage"
       :total-rows="pagination.rows"
       :per-page="pagination.perPage"
@@ -108,7 +114,12 @@ export default {
   data() {
     return {
       files: [],
-      fields: ["name", "size", "type", { key: "action", class: "text-center" }],
+      fields: [
+        { key: "name", class: "text-truncate file-name" },
+        "size",
+        "type",
+        { key: "action", class: "text-center" }
+      ],
       file_id: "",
       isUploading: false,
       fileToUpload: null,
