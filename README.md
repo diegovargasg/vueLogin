@@ -31,7 +31,7 @@ $ npm run install
 
 **_Note:_**
 
-- _In case the installation command fails, the dependencies can manually be installed by running npm install and composer install inside the folders client and api respectively_
+_In case the installation command fails, the dependencies can manually be installed by running npm install and composer install inside the folders client and api respectively_
 
 ### Update the database credentials in the .env file
 
