@@ -10,7 +10,6 @@ Vue.use(BootstrapVue);
 
 require("@/store/subscriber");
 
-//axios.defaults.baseURL = "https://agile-taiga-10845.herokuapp.com/api";
 axios.defaults.baseURL = "http://127.0.0.1:8000/api";
 
 Vue.config.productionTip = false;
