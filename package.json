@@ -4,8 +4,10 @@
   "description": "vue and laravel file manager",
   "main": "index.js",
   "scripts": {
-    "build": "cd server && composer install",
-    "heroku-postbuild": ""
+    "migrations": "cd api && php artisan migrate:fresh && php artisan db:seed",
+    "api:install": "cd api && composer install && cp .env.example .env",
+    "client:install": "cd client && npm install",
+    "install": "npm run client:install && npm run api:install"
   },
   "repository": {
     "type": "git",
