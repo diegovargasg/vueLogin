@@ -72,6 +72,13 @@ The client server should be running now, usually under:
 http://localhost:8080/
 ```
 
+### Test Login
+
+```sh
+email: jonh@digital.com
+pass: password
+```
+
 ### TODOS:
 
 - [ ] Add UnitTesting
